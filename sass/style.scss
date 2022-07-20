@@ -1,0 +1,162 @@
+@charset "utf-8";
+
+/* ------------------------------------
+definition
+------------------------------------ */
+
+// // ブレークポイント
+$breakpoints: (
+	"sp": "screen and (max-width: 767px)",
+	"tab": "screen and (minx-width: 768px) and (max-width: 1023px)",
+	"pc": "screen and (min-width: 1024px)",
+)!default;
+
+//      -767    sp - max - 767
+//  768-1023  tabS - max - 1023
+// 1024-1400  tabM - max - 1400
+// 1401-1639  tabL - max - 1639
+//      1640 ~  pc - min - 1640
+
+// メディアクエリー
+@mixin mq($breakpoint: sp) {
+	@media #{map-get($breakpoints, $breakpoint)} {
+		@content;
+	}
+}
+
+
+// elements
+body {
+	font-size: 16px;
+	// font-family: "ヒラギノ明朝 ProN", serif;
+	font-family: 'Noto Sans', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック',YuGothic,'Yu Gothic','メイリオ', Meiryo,'ＭＳ Ｐゴシック','MS PGothic',sans-serif;
+	line-height: 1.7;
+	margin: 0 auto;
+	background: #fff;
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+
+img {
+	width: 100%;
+}
+
+
+/* ------------------------------------
+header
+------------------------------------ */
+.header {
+	&__ham-button {
+		// 4.PCサイズでは非表示
+		display: none;
+		@include mq("sp") {
+			// 5.SPサイズで表示
+			display: block;
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			width: 30px;
+			height: 24px;
+			z-index: 10;
+			box-sizing: border-box;
+			cursor: pointer;
+			-webkit-transition: all 400ms;
+			transition: all 400ms;
+		}
+		span {
+			@include mq("sp") {
+				position: absolute;
+				width: 100%;
+				height: 4px;
+				background: #666;
+				border-radius: 10px;
+				-webkit-transition: all 400ms;
+				transition: all 400ms;
+				&:nth-child(1) {
+					top: 0;
+				}
+				&:nth-child(2) {
+					top: 10px;
+				}
+				&:nth-child(3) {
+					top: 20px;
+				}
+			}
+		}
+		&.open {
+			span:nth-child(1) {
+				background: #fff;
+				top: 6px;
+				-webkit-transform: rotate(-45deg);
+				-moz-transform   : rotate(-45deg);
+				transform        : rotate(-45deg);
+			}
+			span:nth-child(2),
+			span:nth-child(3) {
+				top: 6px;
+				background :#fff;
+				-webkit-transform: rotate(45deg);
+				-moz-transform   : rotate(45deg);
+				transform        : rotate(45deg);
+			}
+		}
+	}
+	&__list-wrap {
+		// position: fixed;
+		// top: 0;
+		// right: 0;
+		// height: 50px;
+		@include mq("sp") {
+			// position: fixed;
+			// top: 0;
+			// right: -100%;
+			// width: 100%;
+			// height: 100%;
+			// background: #444;
+			// z-index: 2;
+			// transition: .3s;
+			// font-size: 16px;
+			// padding-top: 50px;
+			// box-sizing: border-box;
+		}
+		// &.open {
+		// 	@include mq("sp") {
+		// 		right: 0px;
+		// 	}
+		// }
+	}
+	&__list-cover {
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 100%;
+		height: auto;
+		// 1.横並び
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		background: gray;
+		transition: .3s;
+		@include mq("sp") {
+			// 2.SPサイズで右側に隠れる
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			text-align: center;
+			right: -100%;
+			&.open {
+				// 3.hamボタンで右から出てくる
+				right: 0px;
+			}
+		}
+	}
+	&__list {
+		padding-top: 5px;
+		@include mq("sp") {
+			display: block;
+			padding : 20px 30px;
+		}
+	}
+}
